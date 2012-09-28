@@ -15,12 +15,12 @@
  *   http://jquery.com
  */
 (function($, window){
-	$.fn.fixOnScroll = function(options){
-		var defaults = {
-			offset: 0,
+$.fn.fixOnScroll = function(options){
+var defaults = {
+offset: 0,
       positioning: 'fixed',
       zIndex: 'auto'
-		},
+},
     opts = $.extend(defaults, options),
     fixed = false,
     top = 0,
@@ -29,13 +29,13 @@
     prevFloat = 'none',
     prevZIndex = 'auto';
 
-    function fix(elem){
+    function fix($elem){
       if(!fixed || opts.positioning == 'absolute'){
         var t = 0;
         if(opts.positioning == 'absolute'){
           t = $(window).scrollTop();
         }
-        $(elem).css({
+        $elem.css({
           'position':opts.positioning,
           'top':t,
           'left':left,
@@ -45,9 +45,9 @@
         fixed = true;
       }
     }
-    function reset(elem){
+    function reset($elem){
       if(fixed){
-        $(elem).css({
+        $elem.css({
           'position':'static',
           'float': prevFloat,
           'z-index': prevZIndex
@@ -56,20 +56,20 @@
       }
     }
 
-		return this.each(function() {
-      var elem = this;
-      var pos = $(elem).offset();
+    return this.each(function() {
+      var $elem = $(this);
+      var pos = $elem.offset();
       top = pos && pos.top ? pos.top : 0;
       left = pos && pos.left ? pos.left : 0;
-      prevFloat = $(elem).css('float');
-      prevZIndex = $(elem).css('z-index');
+      prevFloat = $elem.css('float');
+      prevZIndex = $elem.css('z-index');
       $(window).scroll(function() {
         if($(window).scrollTop() > (top + opts.offset)){
-          fix(elem);
+          fix($elem);
         }else{
-          reset(elem);
+          reset($elem);
         }
       });
-		});
-	};
+});
+};
 })(jQuery, window);
